@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int     @id @unique @default(autoincrement())
+  firstName String  @default("")
+  lastName  String  @default("")
+  age       String  @default("")
+  image     String  @default("")
+  email     String  @default("")
+  favorite  Boolean @default(false)
+  country   String  @default("")
+  city      String  @default("")
+  address   String  @default("")
+  posts     Post[]
+}
+
+model Post {
+  id       Int      @id @default(autoincrement())
+  title    String
+  body     String
+  tags     String[]
+  likes    Int
+  dislikes Int
+  userId   Int
+  user     User     @relation(fields: [userId], references: [id])
+}
